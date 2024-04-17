@@ -5,8 +5,9 @@ import Button from "./button";
 import NavItems from "./nav-items";
 
 const Navbar = () => {
+  const handleClick = () => {};
   return (
-    <div className="w-full px-10 pt-10 relative  ">
+    <div className="w-full md:px-10 px-4 pt-10 relative  ">
       <div className="md:max-w-screen-2xl mx-auto flex items-center w-full justify-between">
         <Logo />
         <NavItems />

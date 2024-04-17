@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Tag from "./tag";
 import { syne } from "@/fonts";
 import Image from "next/image";
-import Button from "./button";
 import MainButton from "./main-button";
 import { useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
@@ -32,13 +31,13 @@ const Hero = () => {
   return (
     <div
       ref={ref}
-      className="md:grid grid-cols-2 gap-x-5 items-center justify-center mt-16 gap-y-10 flex flex-col"
+      className="md:grid grid-cols-2 gap-x-5 items-center justify-center mt-16 gap-y-10 flex flex-col md:px-8 md:mx-0"
     >
-      <div className="flex flex-col md:gap-4 justify-center items-center gap-8">
+      <div className="flex flex-col md:gap-4 md:items-start justify-center items-center gap-8">
         <Tag>Awaken Youe Images</Tag>
         <h1
           className={cn(
-            "font-bold md:text-[84px] text-5xl text-center md:text-left md:leading-[96px] tracking-tighter",
+            "font-bold md:text-6xl text-5xl text-center md:text-left lg:leading-[96px] lg:text-[84px] tracking-tighter ",
             syne.className
           )}
         >
@@ -62,7 +61,7 @@ const Hero = () => {
         />
       </div>
       <div className="md:place-self-start md:col-span-2 ">
-        <div className="lg:flex md:grid md:grid-cols-5 grid grid-cols-2 md:gap-2 gap-4 place-items-center">
+        <div className="lg:flex md:grid md:grid-cols-4 grid grid-cols-2 md:gap-2 gap-4 place-items-center">
           {tagItem.map((item, index) => (
             <Tag key={index} className="text-xs py-1">
               {item}

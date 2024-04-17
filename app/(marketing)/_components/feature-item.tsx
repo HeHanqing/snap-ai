@@ -49,7 +49,7 @@ const FeatureItem = ({
             >
               {feature.title}
             </p>
-            <p className="leading-5 text-gray-500 md:mt-4 md:text-base text-sm">
+            <p className="leading-5 text-gray-500 md:mt-4 mt-2 mb-4 md:mb-0 md:text-base text-sm ">
               {feature.description}
             </p>
           </div>

@@ -27,9 +27,9 @@ const PriceItem = ({
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center">
-        <p className="md:text-4xl text-2xl font-medium">{plan} Plan</p>
-        <p className="relative md:text-4xl text-2xl font-medium">
+      <div className="flex justify-between items-center text-2xl md:text-2xl lg:text-4xl">
+        <p className="font-medium">{plan} Plan</p>
+        <p className="relative font-medium ">
           <span className="absolute top-0 -translate-x-full text-sm">US</span>$
           {price}
         </p>
