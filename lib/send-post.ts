@@ -1,6 +1,9 @@
+import { cookies } from "next/headers";
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const CreateImage = async (prompt: string) => {
+  const _cookies = cookies();
   const { signal } = new AbortController();
   const response = await fetch("/api/predictions", {
     method: "POST",
