@@ -1,5 +1,3 @@
-"use server";
-
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const CreateImage = async (prompt: string) => {
@@ -29,7 +27,7 @@ export const CreateImage = async (prompt: string) => {
     await sleep(1000);
     const timestamp = Date.now() + 1000 * parseInt(prediction.created_at);
     const response = await fetch(
-      "/api/predictions/" + prediction.id + "?timestamp=" + timestamp,
+      "/api/predictions/" + prediction.id + "?_=" + new Date().getTime(),
       {
         cache: "no-store",
         headers: {
