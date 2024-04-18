@@ -1,3 +1,5 @@
+"use server";
+
 import Replicate from "replicate";
 
 const replicate = new Replicate({
@@ -9,6 +11,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const prediction = await replicate.predictions.get(params.id);
+  console.log(prediction);
 
   if (prediction?.error) {
     return new Response(JSON.stringify({ detail: prediction.error.detail }), {
