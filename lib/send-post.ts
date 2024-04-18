@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const SendPostRequest = async (prompt: string) => {
@@ -22,15 +24,19 @@ export const SendPostRequest = async (prompt: string) => {
 
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
-    const response = await fetch("/api/predictions/" + prediction.id, {
-      cache: "no-store",
-    });
+    const timestamp = new Date().getTime(); // Generate a unique timestamp
+    const response = await fetch(
+      "/api/predictions/" + prediction.id + "?timestamp=" + timestamp,
+      {
+        cache: "no-store",
+      }
+    );
     prediction = await response.json();
+    console.log(prediction);
     if (response.status !== 200) {
       console.log(prediction.detail);
       return { error: prediction.detail };
     }
-    console.log(prediction);
   }
 
   if (prediction.status === "succeeded") {
