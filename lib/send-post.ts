@@ -1,4 +1,4 @@
-import { useState } from "react";
+export const dynamic = "force-dynamic";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -24,14 +24,9 @@ export const SendPostRequest = async (prompt: string) => {
 
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
-    const timestamp = new Date().getTime(); // Generate a unique timestamp
-    const response = await fetch(
-      "/api/predictions/" + prediction.id + "?timestamp=" + timestamp,
-      {
-        cache: "no-store",
-        next: { revalidate: 1000 },
-      }
-    );
+    const response = await fetch("/api/predictions/" + prediction.id, {
+      cache: "no-cache",
+    });
     prediction = await response.json();
     console.log(prediction);
     if (response.status !== 200) {
