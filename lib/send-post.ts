@@ -23,14 +23,7 @@ export const SendPostRequest = async (prompt: string) => {
 
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
-    const response = await fetch("/api/predictions/" + prediction.id, {
-      cache: "no-store",
-      signal,
-      headers: {
-        "Cache-Control": "no-store",
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch("/api/predictions/" + prediction.id);
     prediction = await response.json();
     console.log(prediction);
     if (response.status !== 200) {
