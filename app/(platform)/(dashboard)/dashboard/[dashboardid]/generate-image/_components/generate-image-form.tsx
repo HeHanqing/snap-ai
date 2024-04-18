@@ -11,13 +11,9 @@ import SubmitButton from "../../../_components/submit-button";
 import { cn } from "@/lib/utils";
 import { syne } from "@/fonts";
 import { SendPostRequest } from "@/lib/send-post";
-import { Prediction } from "replicate";
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const GenerateImageForm = () => {
   const [generatedImageUrl, setGeneratedImageUrl] = useState("");
-  const [prediction, setPrediction] = useState<Prediction | null>(null);
 
   const { execute, fieldErrors } = useAction(generateImage, {
     onSuccess: (data) => {
@@ -34,42 +30,8 @@ const GenerateImageForm = () => {
     const name = formdata.get("name") as string;
     const prompt = formdata.get("prompt") as string;
 
-    let generatedImageUrl;
+    const generatedImageUrl = await SendPostRequest(prompt);
 
-    const response = await fetch("/api/predictions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt,
-      }),
-    });
-    let prediction = await response.json();
-    if (response.status !== 201) {
-      console.log(prediction.detail);
-      return;
-    }
-    setPrediction(prediction);
-
-    while (
-      prediction.status !== "succeeded" &&
-      prediction.status !== "failed"
-    ) {
-      await sleep(1000);
-      const response = await fetch("/api/predictions/" + prediction.id);
-      prediction = await response.json();
-      if (response.status !== 200) {
-        console.log(prediction.detail);
-        return;
-      }
-      console.log({ prediction });
-      setPrediction(prediction);
-    }
-
-    if (prediction.status === "succeeded") {
-      generatedImageUrl = prediction.output[0];
-    }
     execute({ name, prompt, generatedImageUrl });
   };
   return (
