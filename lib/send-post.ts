@@ -1,13 +1,7 @@
-"use client";
-import { unstable_noStore as noStore } from "next/cache";
-
-export const runtime = "edge";
-export const fetchCache = "force-no-store";
-
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const SendPostRequest = async (prompt: string) => {
-  noStore();
+  const { signal } = new AbortController();
   const response = await fetch("/api/predictions", {
     method: "POST",
     body: JSON.stringify({
@@ -30,6 +24,7 @@ export const SendPostRequest = async (prompt: string) => {
     await sleep(1000);
     const response = await fetch("/api/predictions/" + prediction.id, {
       cache: "no-store",
+      signal,
     });
     prediction = await response.json();
     console.log(prediction);
