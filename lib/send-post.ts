@@ -3,7 +3,6 @@ export const fetchCache = "force-no-store";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const SendPostRequest = async (prompt: string) => {
-  let generatedImageUrl;
   const response = await fetch("/api/predictions", {
     method: "POST",
     body: JSON.stringify({
@@ -25,7 +24,7 @@ export const SendPostRequest = async (prompt: string) => {
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
     const response = await fetch("/api/predictions/" + prediction.id, {
-      cache: "no-cache",
+      cache: "no-store",
     });
     prediction = await response.json();
     console.log(prediction);
