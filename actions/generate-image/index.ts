@@ -13,7 +13,7 @@ const replicate = new Replicate();
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId } = auth();
 
-  const { name, prompt } = data;
+  const { name, prompt, generatedImageUrl } = data;
 
   if (!userId) {
     return {
@@ -21,26 +21,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  const input = {
-    width: 1024,
-    height: 1024,
-    prompt,
-    refine: "expert_ensemble_refiner",
-    apply_watermark: false,
-    num_inference_steps: 25,
-  };
-
   let prediction;
 
   try {
-    const output = await replicate.run(
-      "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
-      { input }
-    );
-    let generatedImageUrl = Object.values(output)[0] as string;
-
-    console.log(output);
-
     prediction = await db.prediction.create({
       data: {
         userId,

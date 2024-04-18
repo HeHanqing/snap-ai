@@ -10,6 +10,7 @@ import TransformedImage from "@/app/(platform)/(dashboard)/_components/transform
 import SubmitButton from "../../../_components/submit-button";
 import { cn } from "@/lib/utils";
 import { syne } from "@/fonts";
+import { SendPostRequest } from "@/lib/send-post";
 
 const GenerateImageForm = () => {
   const [generatedImageUrl, setGeneratedImageUrl] = useState("");
@@ -29,7 +30,9 @@ const GenerateImageForm = () => {
     const name = formdata.get("name") as string;
     const prompt = formdata.get("prompt") as string;
 
-    execute({ name, prompt });
+    const generatedImageUrl = await SendPostRequest(prompt);
+
+    execute({ name, prompt, generatedImageUrl });
   };
   return (
     <ScrollArea>

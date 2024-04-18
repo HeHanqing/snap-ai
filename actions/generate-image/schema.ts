@@ -12,4 +12,5 @@ export const CreateGenerateImage = z.object({
     .min(3, {
       message: "Prompt is too short",
     }),
+  generatedImageUrl: z.string(),
 });
