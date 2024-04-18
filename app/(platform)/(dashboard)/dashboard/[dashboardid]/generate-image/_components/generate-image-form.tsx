@@ -39,7 +39,9 @@ const GenerateImageForm = () => {
     const response = await fetch("/api/predictions", {
       method: "POST",
       body: JSON.stringify({
+        width: 200,
         prompt,
+        height: 200,
       }),
     });
     let prediction = await response.json();
