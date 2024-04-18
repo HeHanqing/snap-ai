@@ -25,6 +25,10 @@ export const SendPostRequest = async (prompt: string) => {
     const response = await fetch("/api/predictions/" + prediction.id, {
       cache: "no-store",
       signal,
+      headers: {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+      },
     });
     prediction = await response.json();
     console.log(prediction);
