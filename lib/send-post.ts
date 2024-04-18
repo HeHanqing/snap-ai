@@ -30,6 +30,7 @@ export const SendPostRequest = async (prompt: string) => {
       console.log(prediction.detail);
       return { error: prediction.detail };
     }
+    console.log(prediction);
   }
 
   if (prediction.status === "succeeded") {
