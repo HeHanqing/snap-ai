@@ -1,4 +1,3 @@
-"use client";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const CreateImage = async (prompt: string) => {
@@ -27,7 +26,9 @@ export const CreateImage = async (prompt: string) => {
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
     const response = await fetch("/api/predictions/" + prediction.id, {
-      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-store",
+      },
       signal,
     });
     prediction = await response.json();
