@@ -1,10 +1,13 @@
 "use client";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export const SendPostRequest = async (prompt: string) => {
+export const CreateImage = async (prompt: string) => {
   const { signal } = new AbortController();
   const response = await fetch("/api/predictions", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       width: 200,
       height: 200,
@@ -23,7 +26,10 @@ export const SendPostRequest = async (prompt: string) => {
 
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
-    const response = await fetch("/api/predictions/" + prediction.id);
+    const response = await fetch("/api/predictions/" + prediction.id, {
+      // cache: "no-store",
+      signal,
+    });
     prediction = await response.json();
     console.log(prediction);
     if (response.status !== 200) {
