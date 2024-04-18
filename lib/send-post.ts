@@ -1,4 +1,5 @@
 "use client";
+import { unstable_noStore as noStore } from "next/cache";
 
 export const runtime = "edge";
 export const fetchCache = "force-no-store";
@@ -6,6 +7,7 @@ export const fetchCache = "force-no-store";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const SendPostRequest = async (prompt: string) => {
+  noStore();
   const response = await fetch("/api/predictions", {
     method: "POST",
     body: JSON.stringify({
