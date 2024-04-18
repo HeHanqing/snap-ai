@@ -1,4 +1,5 @@
 "use client";
+export const fetchCache = "force-no-store";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -6,8 +7,8 @@ export const SendPostRequest = async (prompt: string) => {
   const response = await fetch("/api/predictions", {
     method: "POST",
     body: JSON.stringify({
-      width: 1024,
-      height: 1024,
+      width: 200,
+      height: 200,
       prompt,
       refine: "expert_ensemble_refiner",
       apply_watermark: false,
