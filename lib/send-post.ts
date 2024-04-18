@@ -1,3 +1,5 @@
+"use server";
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const CreateImage = async (prompt: string) => {
