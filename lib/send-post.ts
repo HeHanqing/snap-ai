@@ -29,6 +29,7 @@ export const SendPostRequest = async (prompt: string) => {
       "/api/predictions/" + prediction.id + "?timestamp=" + timestamp,
       {
         cache: "no-store",
+        next: { revalidate: 1000 },
       }
     );
     prediction = await response.json();
