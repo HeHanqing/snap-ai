@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import Replicate from "replicate";
 
 const replicate = new Replicate({
@@ -8,6 +9,7 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const _cookies = cookies();
   const prediction = await replicate.predictions.get(params.id);
   console.log(prediction);
 
