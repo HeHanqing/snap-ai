@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
