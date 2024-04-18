@@ -31,6 +31,7 @@ const GenerateImageForm = () => {
     const prompt = formdata.get("prompt") as string;
 
     const generatedImageUrl = await SendPostRequest(prompt);
+    console.log(generatedImageUrl);
 
     execute({ name, prompt, generatedImageUrl });
   };
