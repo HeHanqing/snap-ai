@@ -1,5 +1,3 @@
-"use server";
-
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const CreateImage = async (prompt: string) => {
@@ -27,12 +25,17 @@ export const CreateImage = async (prompt: string) => {
 
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
-    const response = await fetch("/api/predictions/" + prediction.id, {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-      signal,
-    });
+    const timestamp = Date.now() + 1000 * parseInt(prediction.created_at);
+    const response = await fetch(
+      "/api/predictions/" + prediction.id + "?timestamp=" + timestamp,
+      {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-store",
+        },
+        signal,
+      }
+    );
     prediction = await response.json();
     console.log(prediction);
     if (response.status !== 200) {
