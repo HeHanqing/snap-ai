@@ -27,7 +27,7 @@ export const CreateImage = async (prompt: string) => {
   while (prediction.status !== "succeeded" && prediction.status !== "failed") {
     await sleep(1000);
     const response = await fetch("/api/predictions/" + prediction.id, {
-      // cache: "no-store",
+      cache: "no-store",
       signal,
     });
     prediction = await response.json();
