@@ -1,3 +1,4 @@
+"use server";
 import { cookies } from "next/headers";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
