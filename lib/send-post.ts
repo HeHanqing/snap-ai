@@ -1,4 +1,4 @@
-export const fetchCache = "force-no-store";
+"use client";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
