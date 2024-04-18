@@ -1,9 +1,14 @@
 "use client";
+
+import { useState } from "react";
+import { Prediction } from "replicate";
+
 export const fetchCache = "force-no-store";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const SendPostRequest = async (prompt: string) => {
+  const [prediction, setPrediction] = useState<Prediction | null>(null);
   const response = await fetch("/api/predictions", {
     method: "POST",
     body: JSON.stringify({
@@ -15,27 +20,30 @@ export const SendPostRequest = async (prompt: string) => {
       num_inference_steps: 25,
     }),
   });
-  let prediction = await response.json();
+  let output = await response.json();
   if (response.status !== 201) {
     return {
-      error: prediction.detail,
+      error: output.detail,
     };
   }
+  setPrediction(prediction);
 
-  while (prediction.status !== "succeeded" && prediction.status !== "failed") {
+  while (output.status !== "succeeded" && output.status !== "failed") {
     await sleep(1000);
-    const response = await fetch("/api/predictions/" + prediction.id, {
+    const response = await fetch("/api/predictions/" + output.id, {
       cache: "no-store",
     });
-    prediction = await response.json();
+    output = await response.json();
     console.log(prediction);
     if (response.status !== 200) {
-      console.log(prediction.detail);
-      return { error: prediction.detail };
+      console.log(output.detail);
+      return { error: output.detail };
     }
+    console.log(prediction);
+    setPrediction(prediction);
   }
 
-  if (prediction.status === "succeeded") {
-    return prediction.output[0];
+  if (output.status === "succeeded") {
+    return output.output[0];
   }
 };
