@@ -10,8 +10,8 @@ export const CreateImage = async (prompt: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      width: 200,
-      height: 200,
+      width: 1024,
+      height: 1024,
       prompt,
       refine: "expert_ensemble_refiner",
       apply_watermark: false,
